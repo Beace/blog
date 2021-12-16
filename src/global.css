@@ -28,6 +28,7 @@ body {
   background-color: #000;
 }
 
+
 a {
   color: #fff;
 	text-decoration: none;
@@ -45,6 +46,7 @@ a {
   font-size: 16px;
   line-height: 1.5;
   word-wrap: break-word;
+  padding-bottom: 30px;
 }
 
 .markdown-body .octicon {

@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { graphql } from 'gatsby'
 import { MDXRenderer } from 'gatsby-plugin-mdx'
-
+import Comment from '../../components/comment'
 import Layout from '../../components/layout'
 import * as styles from './slug.module.css'
 
@@ -19,6 +19,7 @@ const BlogPost = ({ data }) => {
             {data.mdx.body}
           </MDXRenderer>
         </div>
+        <Comment title={data.mdx.frontmatter.title} id={data.mdx.id}/>
       </div>
     </Layout>
   )
@@ -30,6 +31,7 @@ export const query = graphql`
         title
         date(formatString: "MMMM D, YYYY")
       }
+      id
       body
     }
   }

@@ -1,4 +1,3 @@
-import { tailwind } from '@theme-ui/presets'
 import nightOwl from '@theme-ui/prism/presets/dracula.json'
 
 

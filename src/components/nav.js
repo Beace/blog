@@ -10,7 +10,7 @@ const Nav = () => (
         activeClassName={styles.active}
       >
         <i className="iconfont icon-home" />
-        HOME
+        <span>HOME</span>
       </Link>
       {/* <Link
         to="/tags"
@@ -26,7 +26,7 @@ const Nav = () => (
         activeClassName={styles.active}
       >
         <i className="iconfont icon-timeline" />
-        TIMELINE
+        <span>TIMELINE</span>
       </Link>
       <Link
         to="/about/"
@@ -34,15 +34,16 @@ const Nav = () => (
         activeClassName={styles.active}
       >
         <i className="iconfont icon-about" />
-        About
+        <span>About</span>
       </Link>
       <a
         href="https://github.com/BeAce"
         target="_blank"
+        rel="noreferrer"
         className={styles.topNavItem}
       >
         <i className="iconfont icon-GitHub" />
-        GitHub
+        <span>GitHub</span>
       </a>
       <Link
         to="/friends/"
@@ -50,7 +51,7 @@ const Nav = () => (
         activeClassName={styles.active}
       >
         <i className="iconfont icon-about" />
-        Friends
+        <span>Friends</span>
       </Link>
     </div>
   </nav>

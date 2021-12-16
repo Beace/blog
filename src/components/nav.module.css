@@ -7,20 +7,31 @@
   line-height: 54px;
   border-bottom: 1px solid #30363d;
   background-color: #000;
+  display: flex;
+  justify-content: center;
 }
+
 .topNavContainer {
-  width: 80%;
-  margin: 0 auto;
   max-width: 900px;
+  display: flex;
 }
 .topNavContainer a {
   text-decoration: none;
   color: #eeee;
+  display: flex;
 }
 .topNavItem {
-  display: inline-block;
+  display: block;
   padding: 0 20px;
   cursor: pointer;
+}
+.topNavItem span {
+  display: none;
+}
+@media (min-width: 650px) {
+  .topNavItem span {
+    display: block;
+  }
 }
 .topNavItem i {
   font-size: 18px;
@@ -29,6 +40,7 @@
 
 .topNavItem:hover {
   border-bottom: 1px solid #fff;
+  color: #fff;
 }
 
 .topNavItem.active {

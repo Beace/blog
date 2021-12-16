@@ -1,7 +1,6 @@
 import * as React from 'react'
-import { Link, useStaticQuery, graphql } from 'gatsby'
+import { useStaticQuery, graphql } from 'gatsby'
 import Helmet from "react-helmet"
-import { jsx, Themed } from 'theme-ui'
 import Nav from './nav'
 import '../global.css'
 import './font.css'
