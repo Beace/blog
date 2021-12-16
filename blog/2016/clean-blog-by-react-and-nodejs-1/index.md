@@ -144,10 +144,11 @@ permalink: node-react-1
 
 <br/>
 除此之外，还需要新建`.babelrc`文件，写入以下内容
+
 ```js
-    {
-        presets: ['es2015', 'react', 'stage-2']
-    }
+{
+    presets: ['es2015', 'react', 'stage-2']
+}
 ```
 > 到此为止，所有的项目配置已经完成。当你设置路由并且写入`react`代码时，就可以发现有输出了。这里，我将`wepack`命令，写入到了`npm`的脚本当中。
 
@@ -159,6 +160,7 @@ permalink: node-react-1
     }
 ```
 通过运行第一行命令，可以执行`webpack`有关内容，通过第二行命令，可以启动`node`服务，刻意做到了前后分离的效果。
+
 ```bash
     npm run webpack
     npm start
