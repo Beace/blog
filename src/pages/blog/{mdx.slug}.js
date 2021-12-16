@@ -6,7 +6,6 @@ import Layout from '../../components/layout'
 import * as styles from './slug.module.css'
 
 const BlogPost = ({ data }) => {
-  console.log(data)
   return (
     <Layout pageTitle={data.mdx.frontmatter.title}>
       <div className={styles.container}>
@@ -19,7 +18,7 @@ const BlogPost = ({ data }) => {
             {data.mdx.body}
           </MDXRenderer>
         </div>
-        <Comment title={data.mdx.frontmatter.title} id={data.mdx.id}/>
+        <Comment title={data.mdx.frontmatter.title} id={data.mdx.id} path={data.mdx.slug} />
       </div>
     </Layout>
   )
@@ -32,6 +31,7 @@ export const query = graphql`
         date(formatString: "MMMM D, YYYY")
       }
       id
+      slug
       body
     }
   }

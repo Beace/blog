@@ -1,10 +1,20 @@
 import * as React from 'react'
-
+import { useStaticQuery, graphql } from 'gatsby'
 import { Disqus } from 'gatsby-plugin-disqus'
 
-const Comment = ({ title, id }) => {
+const Comment = ({ path, title, id }) => {
+  const data = useStaticQuery(graphql`
+    query {
+      site {
+        siteMetadata {
+          siteUrl
+        }
+      }
+    }
+  `)
+
   const disqusConfig = {
-    url: window.location.href,
+    url: `${data.site.siteMetadata.siteUrl}/blog/${path}`,
     identifier: id,
     title: title,
   }
