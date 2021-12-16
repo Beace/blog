@@ -1,0 +1,134 @@
+---
+title: webpack 处理 css module的一种方式
+date: 2018-02-08T14:13:08
+updated: Thu Feb 08 2018 14:13:08 GMT+0800 (CST)
+comments: 1
+categories: js
+tags: ['JavaScript', 'Webpack']
+permalink: webpack-css-module-postcss-css-loader
+---
+
+在实际项目开发中，会经常遇到引入第三方库和开发者自己书写的`css`处理问题。首先我采用了`postcss`的语法，借助`postcss`的语法可以实现定义变量、全局css、自动添加浏览器内核的前缀等等，除此之外，借助`css-loader`，采用css_module的实现方式在`react`中定义`className`，并且为了防止重复的`css`代码，采用了`[name]_[local]-[hash:base64:5]`的命名方式。
+
+<!--more-->
+## 场景
+
+所有的`css`都通过`style`标签的方式注入到`html`文档中，并没有通过`extract-text-webpack-plugin`来处理成css文件
+
+## 疑问
+在该定义场景下，这里主要谈两个问题
+
+1. 一个是如何在`webpack`中分别处理vendor样式和开发者自己书写的样式
+2. 另一个是如何压缩vendor样式和自己书写的样式
+
+## 处理方式
+我采用了`postcss`的两个`plugin`来处理自己的`css`
+
+```js filename="postcss.config.js"
+// postcss.config.js
+module.exports = {
+  plugins: [
+    require('autoprefixer'),
+    require('cssnano')({
+      preset: 'default',
+    }),
+  ],
+};
+```
+
+`autoprefixer` 顾名思义，是添加浏览器内核前缀使用，主要处理兼容性问题，另外，[cssnano](http://cssnano.co/)主要来处理`postcss`的`minify`。并且用`css-loader`来处理变量的命名和导入方式，
+
+```js
+{
+	test: /\.css$/,
+	exclude: /node_modules/,
+	use: [
+		'style-loader',
+		{
+			loader: 'css-loader',
+			options: {
+				modules: true,
+				localIdentName: '[name]_[local]-[hash:base64:5]',
+			},
+		},
+		{
+			loader: 'postcss-loader',
+		},
+	],
+}
+```
+
+下图是最终的css。
+
+![](https://images-manager.oss-cn-shanghai.aliyuncs.com/2018/webpack-css/1.png)
+
+在未使用`cssnano`处理之前的css
+
+![](https://images-manager.oss-cn-shanghai.aliyuncs.com/2018/webpack-css/2.png)
+
+在处理完自身css的时候会出现一个问题，也就是当引用vendor的`css`时，并不希望用`postcss`来处理前缀等问题（因为vendor的`css`已经拥有了这些），甚至处理了会导致样式的错乱，即相当于手动修改了vendor的`css`，导致组件class与样式匹配不上的问题。
+
+#### 解决方式
+
+其实，在`webpack`处理`loader`的时候，是会根据开发者的入口文件递归遍历，在使用`loader`时，同一个`loader`可以针对不同文件使用多次。`loader`的配置中可以通过这样的方式来区分不同文件
+
+```js
+{ exclude: /node_modules/ }
+```
+
+通过这样的方式，排除了`node_modules`下的`css`，另一个问题又出现了，排除了`node_modules`中的`css`样式之后，此时引入的css还想进行压缩或者vendor的样式库并不支持`css_module`时该如何处理？
+
+可以通过如下方式进行处理，排除掉源代码中的`css`，并且采用`css-loader`的options来定义它的处理。
+
+```js
+{
+	test: /\.css$/,
+	exclude: [/src/],
+	use: [
+		'style-loader',
+		{
+			loader: 'css-loader',
+			options: {
+				minimize: true,
+				importLoaders: 0,
+			},
+		},
+	],
+},
+```
+
+在[GitHub - postcss/postcss-loader: PostCSS loader for webpack](https://github.com/postcss/postcss-loader#css-modules)的文档中解释了这里的内容
+
+> This loader cannot be used with CSS Modules out of the box due to the way css-loader processes file imports. To make them work properly, either add the css-loader’s importLoaders option.
+
+在`css-loader`中也有相同的解释
+
+```js
+{
+  test: /\.css$/,
+  use: [
+    'style-loader',
+    {
+      loader: 'css-loader',
+      options: {
+        importLoaders: 2 // 0 => no loaders (default); 1 => postcss-loader; 2 => postcss-loader, sass-loader
+      }
+    },
+    'postcss-loader',
+    'sass-loader'
+  ]
+}
+```
+
+当`loader`不能够用`css_module`的方式处理的时候，需要借助`css-loader`的`importLoaders`选项来进行处理。
+
+这样，`webpack`的build速度也会提升，我这里从**12s**提升到了**10s**，最终vendor的css如下
+
+![](https://images-manager.oss-cn-shanghai.aliyuncs.com/2018/webpack-css/3.png)
+
+## 总结
+
+开发过程中总有一些外部资源不是那么尽如人意，我们需要去尽量的解耦并且做到0冲突，对于不同的位置的资源进行不同的方式的处理，但他们最终的效果应该是相同的。殊途同归，弯路再多，也只是在过程上的不同。
+
+
+

@@ -1,0 +1,118 @@
+---
+title: 分享一些CSS画图技巧(3)—— 电源插头
+date: 2017-03-18T17:13:13
+updated: Sat Mar 18 2017 17:15:18 GMT+0800 (CST)
+comments: 1
+categories:
+tags:
+  - JavaScript
+  - CSS
+permalink: css-draw-power-plug
+---
+
+> 电源插头组合了很多内容，包括三角形，矩形，其实最终形成的图形类似多边形，如下图所示。
+
+![](https://images-manager.oss-cn-shanghai.aliyuncs.com/static/Css-draw/14890752967384.jpg)
+
+
+<!--more-->
+
+原理很简单，六边形的左下和右下的边是由分别有不同位置的两个三角形堆叠而成，这里会有一些简单的计算，建议直接在浏览器端调试即可。中间类似插孔形状的东西其实只不过是圆角的利用罢了。
+
+```html
+<div class="plus-wrapper">
+	<div class="plus">
+	 <div class="triangle triangle-lb"></div>
+	 <div class="triangle triangle-rb"></div>
+	 <div class="plus-port-wrapper plus-port-wrapper-t">
+	   <div class="plus-port"></div>
+	   <div class="plus-port"></div>
+	 </div>
+	 <div class="plus-port-wrapper">
+	   <div class="plus-port"></div>
+	 </div>
+	</div>
+</div>
+```
+
+我会经常通过一些伪类来实现一些`css`效果，尤其是`::after`、`::before`。这样减少了冗余的标签的同时，样式也容易控制。
+
+通过`triangle-lb,::before`和`triangle-rb,::after`的堆叠来实现六边形的两条边。
+
+```css
+.plus-wrapper {
+    width: 130px;
+    height: 98px;
+    border: 1px solid #000;
+    padding: 16px;
+    box-sizing: border-box;
+    position: relative;
+  }
+  .plus {
+    border: 1px solid #000;
+    width: 100%;
+    height: 100%;
+  }
+  .plus::before {
+    content: "";
+    position: absolute;
+    top: 61px;
+    left: 17px;
+    width: 0;
+    height: 0;
+    border-left: 0 solid transparent;
+    border-right: 24px solid transparent;
+    border-bottom: 20px solid #000;
+    z-index: 1;
+  }
+  .plus::after {
+    content: "";
+    position: absolute;
+    top: 61px;
+    right: 15px;
+    width: 0;
+    height: 0;
+    border-left: 24px solid transparent;
+    border-right: 0;
+    border-bottom: 20px solid #000;
+    z-index: 1;
+  }
+  .triangle {
+    position: absolute;
+    z-index: 3;
+  }
+  .triangle-lb {
+    top: 61px;
+    left: 16px;
+    width: 0;
+    height: 0;
+    border-left: 0 solid transparent;
+    border-right: 25px solid transparent;
+    border-bottom: 21px solid #fff;
+  }
+  .triangle-rb {
+    top: 61px;
+    right: 14px;
+    width: 0;
+    height: 0;
+    border-left: 25px solid transparent;
+    border-right: 0;
+    border-bottom: 21px solid #fff;
+  }
+  .plus-port-wrapper {
+    width: 100%;
+    text-align: center;
+  }
+  .plus-port-wrapper-t{
+    margin-top: 4px
+  }
+  .plus-port {
+    margin: 0 12px 0;
+    width: 5px;
+    border: 1px solid #000;
+    height: 24px;
+    display: inline-block;
+    border-radius: 10px;
+  }
+```
+

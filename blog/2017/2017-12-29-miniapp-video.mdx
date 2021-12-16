@@ -1,0 +1,91 @@
+---
+title: 关于小程序视频（video）的一些总结
+date: 2017-12-29T15:26:19
+updated: Fri Dec 29 2017 15:30:18 GMT+0800 (CST)
+comments: 1
+categories:
+tags:
+  - JavaScript
+permalink: miniprogram-video
+---
+
+### 小程序中使用视频
+
+类似视频这种原生组件，位于小程序的最上层，当页面滚动时，很有可能出现一些定位的元素，被视频组件覆盖，如下图
+
+![](https://images-manager.oss-cn-shanghai.aliyuncs.com/miniprogram/661514528766_.pic.jpg)
+
+
+<!--more-->
+为了避免一些层级最高的元素覆盖掉原始样式，可以先隐藏视频，将一gif格式的图片代替，并辅助一播放图标，表示该位置是视频
+
+```html
+<view class='video'>
+    <view class="controls {{isPlay ? 'hide' : 'show'}}">
+      <image class="cover-image" src="https://images-manager.oss-cn-shanghai.aliyuncs.com/source.gif" />
+      <view class="play" bindtap="play">
+        <image class="img" src="../../static/images/play.png" />
+      </view>
+    </view>
+    <video
+      id="myvideo"
+      src="http://7xuqg4.com1.z0.glb.clouddn.com/video/xiaozhan-ceshi.mp4"
+      controls
+      bindended="endHandler"
+      hidden="{{!isPlay}}"
+      bindpause="endHandler"
+    ></video>
+  </view>
+```
+
+
+![](https://images-manager.oss-cn-shanghai.aliyuncs.com/miniprogram/video.png)
+
+
+在onLoad时获取视频的上下文环境
+
+```js
+this.videoCtx = wx.createVideoContext('myvideo', this);
+```
+
+
+并且给该图标添加事件绑定，主要做两件事情，下图为播放时的状态
+
+- 隐藏该图标和gif
+- 播放视频
+
+
+![](https://images-manager.oss-cn-shanghai.aliyuncs.com/miniprogram/video-start.png)
+
+```js
+play() {
+	this.setData({
+	  isPlay: true,
+	});
+	this.videoCtx.play();
+},
+```
+
+
+在视频的播放过程中，若出现用户滚动的操作或者视频已经播放完，再执行
+
+- 停止视频播放
+- 显示该图标和gif
+
+```js
+stop() {
+	this.videoCtx.pause();
+	this.videoCtx.seek(0);
+},
+endHandler() {
+	this.setData({
+	  isPlay: false,
+	});
+	this.pause();
+},
+onPageScroll() {
+	if (this.data.isPlay) {
+	  this.stop();
+	}
+},
+```

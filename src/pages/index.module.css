@@ -1,0 +1,25 @@
+.container {
+  max-width: 850px;
+  margin: 30px auto 0;
+}
+.article + .article {
+  margin-top: 32px;
+}
+
+.title {
+  font-size: 24px;
+  margin-bottom: 12px;
+}
+
+.title a {
+  font-weight: bold;
+  color: #eeee;
+}
+.title a:hover {
+  color: #fff;
+}
+
+.desc {
+  color: gray;
+  font-style: italic;
+}

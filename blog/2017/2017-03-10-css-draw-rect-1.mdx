@@ -1,0 +1,76 @@
+---
+title: 分享一些CSS画图技巧(1)——矩形
+date: 2017-03-10T00:32:07
+updated: Fri Mar 10 2017 00:34:33 GMT+0800 (CST)
+comments: 1
+categories:
+tags:
+  - JavaScript
+  - CSS
+permalink: css-draw-triangle
+---
+
+> 首先在这里声明，对于`css`画图来说，大部分的图案的宽度甚至高度都是固定的，就算采用百分比的方式来绘制，也会有最外面的边界限制。尽量在PC端或者响应式要求不太高的场景下进行，当然会有一些比较简单的图案绘制能够适应响应式的方式，可以采用canvas或svg来绘制。
+
+<!--more-->
+## 矩形的堆叠
+如下图形，可以用来表示服务器。是最简单的一种图形绘制，不需要太多技巧。简单的div嵌套即可完成。为一个注意的地方就是里面的图形，可以用百分比来绘制，这样改变外层div的同时，里面也会相应变化。在这里就省略代码了。
+
+![](https://images-manager.oss-cn-shanghai.aliyuncs.com/static/Css-draw/14890753662725.jpg)￼
+
+## 凹凸形(矩形)
+其实这种图形（如下图）比较少见，但是常常用来描述端口。原理是几个矩形的堆叠，通过相对定位/绝对定位之后的top属性来固定位置，z-index属性来遮掩上下边框。
+
+![](https://images-manager.oss-cn-shanghai.aliyuncs.com/static/Css-draw/14890709420668.jpg)￼
+
+你可以设置每个矩形的宽度为百分比，但是最终会于设计图相差甚远。而且，还要去考虑绝对定位元素居中的问题，当然这不是很困难。但是如果你的场景没有那么复杂，你可以像我这样来写。
+
+先固定最外面盒子的宽高，然后通过top的属性值来决定元素的上下堆叠位置，left为居中设置。border设置边框的有无，z-index属性决定元素垂直屏幕的层级关系。从下往上，逐层的z-index逐渐变大。
+
+```css
+.switch-wrapper{
+  width: 54px;
+  position: relative;
+  height: 30px;
+}
+.switch{
+  border: 2px solid #000;
+  margin: 0 auto;
+  position: absolute;
+  background-color: #fff;
+}
+.switch-1,
+.switch-2 {
+  border-bottom: 0;
+}
+.switch-1{
+  width: 14px;
+  height: 4px;
+  z-index: 3;
+  left: 18px;
+}
+.switch-2 {
+  width: 30px;
+  height: 6px;
+  z-index: 2;
+  top: 4px;
+  left: 10px;
+}
+.switch-3 {
+  width: 50px;
+  height: 16px;
+  font-size: 12px;
+  text-align: center;
+  line-height: 15px;
+  z-index: 1;
+  bottom: 0;
+}
+```
+```html
+<div className="switch-wrapper">
+	<div className="switch switch-1"></div>
+	<div className="switch switch-2"></div>
+	<div className="switch switch-3">G0/1</div>
+</div>
+```
+

@@ -1,0 +1,37 @@
+.topNav {
+  width: 100%;
+  position: sticky;
+  top: 0;
+  left: 0;
+  height: 54px;
+  line-height: 54px;
+  border-bottom: 1px solid #30363d;
+  background-color: #000;
+}
+.topNavContainer {
+  width: 80%;
+  margin: 0 auto;
+  max-width: 900px;
+}
+.topNavContainer a {
+  text-decoration: none;
+  color: #eeee;
+}
+.topNavItem {
+  display: inline-block;
+  padding: 0 20px;
+  cursor: pointer;
+}
+.topNavItem i {
+  font-size: 18px;
+  margin-right: 10px;
+}
+
+.topNavItem:hover {
+  border-bottom: 1px solid #fff;
+}
+
+.topNavItem.active {
+  color: #fff;
+  border-bottom: 1px solid #fff;
+}

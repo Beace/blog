@@ -1,0 +1,63 @@
+---
+title: React+Atom开发者增加效率的7个快捷键
+date: 2017-07-31T00:40:43
+updated: Mon Jul 31 2017 13:30:22 GMT+0800 (CST)
+comments: 1
+categories: js
+tags:
+  - JavaScript
+permalink: react-atom-shortcut-key
+---
+
+### 选择一个字符串
+`alt+shift+left/right` 快速地选择一个字符串。不仅是atom，几乎所有文本编辑器或者操作系统都支持该快捷键。同样，如果没有`shift`可以以字符串为基准快速移动光标。
+
+![](https://images-manager.oss-cn-shanghai.aliyuncs.com/static/react-atom-shorcut/alt_shift_left_right.gif)
+
+<!--more-->
+
+### 选择一行字符串
+`cmd+left/right`不仅是`Atom`，几乎所有文本编辑器或者操作系统都支持该快捷键。同样，如果没有`shift`可以快速移动光标至行首(尾)。
+
+![](https://images-manager.oss-cn-shanghai.aliyuncs.com/static/react-atom-shorcut/cmd_shift_left_right_2.gif)
+
+
+### 上下移动一行代码
+`ctrl+cmd+top/down`,在`React`开发中，上下移动组件或者是变量是经常的操作。
+
+![](https://images-manager.oss-cn-shanghai.aliyuncs.com/static/react-atom-shorcut/upanddown.gif)
+
+### 复制一行代码
+`cmd+shift+d`可以快速的复制一行代码，根据光标的位置即可，并不需要复制整行
+
+![](https://images-manager.oss-cn-shanghai.aliyuncs.com/static/react-atom-shorcut/copy_line.gif)
+
+### 删除一行代码
+删除一行代码有两种方式，通过快捷键`cmd+delete`可以快速的移除一行代码并且下方代码不会自动补齐，对于删除之后还要编辑该行的场景尤为重要。
+
+![](https://images-manager.oss-cn-shanghai.aliyuncs.com/static/react-atom-shorcut/delete_line_1.gif)
+
+另外一种方式是通过`cmd+x`，可以将该行删除后立即补齐。通常，我更喜欢上一种方式，不会破坏结构。
+
+![](https://images-manager.oss-cn-shanghai.aliyuncs.com/static/react-atom-shorcut/delete_line_2.gif)
+
+### 复制相似关键词并粘贴
+该操作通过选中单个字符串和选中相似字符串以及光标的控制相结合。如果是用来`redux-actions`来管理`reducer`,可以快速生成属性。
+
+下图大致操作如下。
+
+`alt+shift+left`选中*等于和空格*，`cmd+d`选中所有*等于和空格*，`alt+shift+left`选中所有要复制的字符串，`cmd+c`复制,`cmd+right`光标快速移动到行尾，`alt+shift+left`选中要被覆盖的字符串，`cmd+v`复制。
+
+![](https://images-manager.oss-cn-shanghai.aliyuncs.com/static/react-atom-shorcut/copy_line_paste.gif)
+
+### 选择一块相似代码并编辑其相似点
+`cmd+l`可以将块代码以行的方式进行编辑，适用于字符串的相似度不高，但是最终效果都相同的场景。例如，`object`的属性尾部添加逗号。
+
+下图大致操作如下。
+
+鼠标选中一块代码，`cmd+l`分块，添加逗号。如果是行首，还需要`cmd+left/right`来快速移动光标。
+
+![](https://images-manager.oss-cn-shanghai.aliyuncs.com/static/react-atom-shorcut/cmd_l.gif)
+
+
+

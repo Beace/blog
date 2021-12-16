@@ -1,0 +1,100 @@
+---
+title: 分享一些CSS画图技巧(2)——三角形
+date: 2017-03-10T00:34:06
+updated: Fri Mar 10 2017 00:34:26 GMT+0800 (CST)
+comments: 1
+categories:
+tags: ['CSS', 'JavaScript']
+permalink: css-draw-triangle-2
+---
+
+> 三角形相对来说比较简单，我们可以通过设置border属性轻易实现。我来实现一个简单的和一个有难度的。
+
+<!--more-->
+## 三角形（简单）
+通过设置三角形（如下图）的四个边的不同颜色，来实现三角形的绘制。其中，包括直角三角形、等边三角形等特殊三角形。
+
+![](https://images-manager.oss-cn-shanghai.aliyuncs.com/static/Css-draw/14890722556585.jpg)￼
+
+其实从严格意义上来说这不是一个三角形(如下图)，只不过我们看到的是一个三角形的形状。它的形成过程是这样的。
+
+![](https://images-manager.oss-cn-shanghai.aliyuncs.com/static/Css-draw/14890732104056.jpg)￼
+
+
+如下图所示，它并非只占有一个三角形的区域，而是一个正方形div盒子。类似一张三角形的png图片，右上方是透明的。
+
+![](https://images-manager.oss-cn-shanghai.aliyuncs.com/static/Css-draw/14890723173742.jpg)￼
+
+
+下面展示了一个直角三角形的实现方式。
+```css
+.triangle {
+	width: 0;
+	height: 0;
+	border-right: 50px solid transparent;
+	border-bottom: 50px solid #abcdef;
+}
+```
+```html
+<div class="triangle"></div>
+```
+
+### 留下一个思考题。
+回顾一个三角形的变化那张图，细心的可以发现，边框所设置的宽度，与div盒子占有的宽高好像不太一致。如下图，我设置了每个方向的 border 都为100px,为何占有的宽度为99.2呢？
+
+![](https://images-manager.oss-cn-shanghai.aliyuncs.com/static/Css-draw/14890735852383.jpg)￼
+
+
+## 三角形（复杂）
+我们来实现一个比较常用的tooltip效果。做这样的一个效果（如下图）有很多方法。比如通过三角形的堆叠差异，来实现三角形的两条线。或者先绘制一个三角形，然后将两个线定位到三角形的边上。其实都不优雅，因为我们知道通过border来绘制三角形只能填充其border-color，没有办法描边。
+
+![](https://images-manager.oss-cn-shanghai.aliyuncs.com/static/Css-draw/14890739284055.jpg)￼
+
+在这里，我采用一种比较独特的方法。为了避免三角形的边框修补问题，我选择了不绘制三角形，而是绘制一个正方形将其旋转45°，通过设置正方形的两个相邻边框让其拥有“三角形边框”，并且通过定位来实现三角形的遮盖。
+
+整个过程如下。
+
+![](https://images-manager.oss-cn-shanghai.aliyuncs.com/static/Css-draw/14890747854821.jpg)￼
+
+详细代码如下。
+```css
+.tooltip {
+ width: 100px;
+ height: 50px;
+ border: 1px solid #5a89c7;
+ border-radius: 2px;
+ box-shadow: 0 0 10px #abcdef;
+ padding: 2px;
+ box-sizing: border-box;
+ position: relative;
+ z-index: 9;
+ font-size: 12px;
+ line-height: 12px;
+ text-align: center;
+}
+
+.tooltip::after {
+ content: '';
+ position: absolute;
+ display: block;
+ text-align: center;
+ width: 30px;
+ height: 30px;
+ background-color: #fff;
+ border: 1px solid #5a89c7;
+ border-style: solid;
+ border-width: 1px;
+ border-width: 0 1px 1px 0;
+ bottom: -32px;
+ left: 50%;
+ transform: translate(-50%, -50%) rotate(45deg);
+ z-index: -1;
+}
+```
+
+```html
+<div class="tooltip">
+    <div class="content">Hello, tooltip!Hover to see me!</div>
+</div>
+```
+

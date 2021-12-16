@@ -1,0 +1,114 @@
+---
+title: 分享一些CSS画图技巧(4)—插头
+date: 2017-03-18T17:14:06
+updated: Sat Mar 18 2017 17:15:09 GMT+0800 (CST)
+comments: 1
+categories:
+tags:
+  - JavaScript
+  - CSS
+permalink: css-draw-plug
+---
+
+> 这个图形其实很少看到，其实在实际生活中，经常会有这样的插头形状，像主机和显示器的相连接的插头。需要两个螺丝钉去固定，以及几个端口去连接。
+
+![img](https://images-manager.oss-cn-shanghai.aliyuncs.com/static/Css-draw/14890752802585.jpg)
+
+<!--more-->
+
+## 原理
+
+最外面的`div`可以使用圆角的特性，来定义不同位置的圆角显示。
+
+对于两边螺丝钉，我仍然喜欢借助伪类`::before`和`::after`来进行螺丝钉的绘制。这两个螺丝钉，大小，形状，内容完全一致。只有位置不统一，因此我们可以先写common部分，然后去分别定义位置信息。
+
+
+
+#### HTML结构
+
+```html
+<div class="container">
+    <div class="port-wrapper">
+      <div class="port-dot-wrapper">
+        <span class="port-dot"></span>
+        <span class="port-dot"></span>
+        <span class="port-dot"></span>
+        <span class="port-dot"></span>
+        <span class="port-dot"></span>
+      </div>
+      <div class="port-dot-wrapper">
+        <span class="port-dot"></span>
+        <span class="port-dot"></span>
+        <span class="port-dot"></span>
+        <span class="port-dot"></span>
+      </div>
+    </div>
+  </div>
+```
+
+​
+
+### 最外层div的圆角实现
+
+
+
+```css
+.container {
+  position: relative;
+  width: 80px;
+}
+.port-wrapper {
+  border: 1px solid #000;
+  width: 78px;
+  height: 36px;
+  padding: 4px;
+  box-sizing: border-box;
+  border-radius: 4px 4px 17px 17px;
+}
+```
+
+### 螺丝钉原理
+
+#### 公共部分
+
+通过伪类的`content`来定义内容，通过绝对定位定义其位置信息。
+
+```css
+.port-wrapper::before,
+.port-wrapper::after {
+  content: "x";
+  display: block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  text-align: center;
+  border: 1px solid #000;
+  line-height: 12px;
+  font-size: 12px;
+  position: absolute;
+}
+```
+
+#### 位置信息
+
+```Css
+.port-wrapper::before {
+  left: -16px;
+  top: 0;
+}
+.port-wrapper::after {
+  right: -14px;
+  top: 0;
+}
+```
+
+
+
+### 端口原理
+
+端口其实比较简单，只需要定义两行端口居中排开即可。
+
+
+
+
+

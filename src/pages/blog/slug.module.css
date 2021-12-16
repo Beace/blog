@@ -1,0 +1,15 @@
+.container {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 20px;
+}
+.container p img {
+  max-width: 100%;
+}
+.head {
+  margin-bottom: 40px;
+}
+.desc {
+  color: gray;
+  font-style: italic;
+}

@@ -1,0 +1,65 @@
+---
+title: 如何科学上网-想要翻墙怎么办
+date: 2017-03-22T20:53:22
+updated: Fri Sep 08 2017 13:42:14 GMT+0800 (CST)
+comments: 1
+categories:
+tags:
+  - JavaScript
+permalink: how-to-get-vpn
+---
+
+## 首先通过hosts文件翻墙。
+
+具体方法见 https://github.com/racaljk/hosts。
+
+<!--more-->
+### 这里简述下Mac下的操作。
+
+将  https://raw.githubusercontent.com/racaljk/hosts/master/hosts 链接中的hosts的文件内容复制，`mac`下进行如下命令：
+
+删除本地`hosts`文件（如果重要需要备份），在终端最初始目录进行操作。
+
+```sh
+$ sudo rm -f /etc/hosts
+```
+
+新建hosts文件，将刚才复制内容粘贴
+
+```sh
+$ sudo vi /etc/hosts
+```
+
+`hosts`文件如下图所示
+
+![](https://images-manager.oss-cn-shanghai.aliyuncs.com/static/xxnet/hosts.jpg)
+
+更新完成后即可进入谷歌搜索，请使用`https`的方式。例如：https://google.com.hk 访问。
+
+![](https://images-manager.oss-cn-shanghai.aliyuncs.com/static/xxnet/hello.jpg)
+
+更新完成后大部分常见网站都可访问，例如`Facebook`、`Twitter`、`youtube`等，少数被墙的厉害的难以进入，但是想要在`youtube`上看个视频还是有点卡的。
+
+虽然完成了翻墙这个操作，但是访问速度还是比较慢，但是对于不是程序员的大哥大姐已经很够用了。下面说一种快的方式。
+
+
+## XX-net
+
+XX-net在使用时需要梯子或者通过上述方式翻墙后进行。
+关于XX-net的使用方式，其文档已经很详细很详细了，而且[中文版](https://github.com/XX-net/XX-Net/wiki/XXNET%E8%B6%85%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B)的更详细，每一个步骤都有截图。
+
+在这里，说几个比较不容易理解的问题。
+
+申请`Google appid`，根据教程里面的链接步骤申请`appid`，申请`appid`需要进入`Google`的控制台（`console`），这也是为什么会先替换`hosts`。
+
+`appid`本来作为`Google`开发者使用其API或SDK进行开发使用，`XX-net`通过使用`GoAgent`用来代理本地的网络请求。
+
+### 在使用XX-net经常会碰到“请检查浏览器代理设置”的问题。
+
+建议安装`SwitchyOmega`插件来进行自动切换代理。避免开启代理后国内网站访问速度慢的问题。选择`XX-Net`自动切换。
+
+![](https://images-manager.oss-cn-shanghai.aliyuncs.com/static/xxnet/xx-net-switch.jpg)
+
+刷新浏览器。看到如下界面即可愉快的玩耍了。
+
+![](https://images-manager.oss-cn-shanghai.aliyuncs.com/static/xxnet/xxnet.jpg)
