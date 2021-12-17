@@ -11,6 +11,11 @@
   justify-content: center;
 }
 
+.topNavInner {
+  max-width: 1280px;
+  display: flex;
+  justify-content: space-between;
+}
 .topNavContainer {
   max-width: 900px;
   display: flex;

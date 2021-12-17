@@ -1,3 +1,4 @@
+require("dotenv").config()
 module.exports= {
   siteMetadata: {
     siteUrl: "https://beace.app",
@@ -57,6 +58,15 @@ module.exports= {
       options: {
         shortname: `beace-blog`
       }
-    }
+    },
+    {
+      resolve: `gatsby-plugin-algolia`,
+      options: {
+        appId: process.env.GATSBY_ALGOLIA_APP_ID,
+        apiKey: process.env.ALGOLIA_ADMIN_KEY,
+        queries: require("./src/utils/algolia-queries")
+      },
+    },
+    'gatsby-plugin-styled-components'
   ],
 };
